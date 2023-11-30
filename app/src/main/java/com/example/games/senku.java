@@ -27,7 +27,6 @@ public class senku extends AppCompatActivity {
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numColumns; col++) {
                 Button button = new Button(this);
-                button.setId(buttonIdCounter++);
                 button.setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
                 button.setTextColor(getResources().getColor(R.color.button_text_color));
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();
