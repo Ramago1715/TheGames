@@ -6,12 +6,12 @@ import androidx.gridlayout.widget.GridLayout;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class game_2048 extends AppCompatActivity implements GestureDetector.OnGestureListener {
@@ -24,7 +24,6 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2048);
         GridLayout gridLayout = findViewById(R.id.GridLayout);
-
         int numColumns = 4;
         int numRows = 4;
         gestureDetector = new GestureDetector(this, this);
@@ -41,6 +40,55 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         GenerarNuevoNumero();
 
 
+    }
+    private void UpMoviment(){
+        for (int x=0;x<=this.matrizbotones.length-2;x++){
+            for (int y=0;y<=this.matrizbotones.length-1;y++){
+                if(this.matrizbotones[x][y].getText().equals("")  && !this.matrizbotones[x+1][y].getText().equals("")) {
+                    this.matrizbotones[x][y].setText(this.matrizbotones[x + 1][y].getText());
+                    this.matrizbotones[x + 1][y].setText("");
+                    SumarPuntuacion();
+                }
+            }
+        }
+    }
+
+    private void DownMoviment(){
+        for (int x=this.matrizbotones.length-1;x>=1;x--){
+            for (int y=0;y<=this.matrizbotones.length-1;y++){
+                if(this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x-1][y].getText().equals("")){
+                    this.matrizbotones[x][y].setText(this.matrizbotones[x - 1][y].getText());
+                    this.matrizbotones[x - 1][y].setText("");
+                    SumarPuntuacion();
+
+                }
+            }
+        }
+    }
+
+    private void LeftMoviment(){
+        for (int x=0;x<=this.matrizbotones.length-1;x++){
+            for (int y=0;y<=this.matrizbotones.length-2;y++){
+                if(this.matrizbotones[x][y].getText().equals("")  && !this.matrizbotones[x][y+1].getText().equals("")) {
+                    this.matrizbotones[x][y].setText(this.matrizbotones[x][y+1].getText());
+                    this.matrizbotones[x][y+1].setText("");
+                    SumarPuntuacion();
+                }
+            }
+        }
+    }
+
+
+    private void RigthMoviment(){
+        for (int x=0;x<=this.matrizbotones.length-1;x++){
+            for (int y=this.matrizbotones.length-1;y>=1;y--){
+                if(this.matrizbotones[x][y].getText().equals("")  && !this.matrizbotones[x][y-1].getText().equals("")) {
+                    this.matrizbotones[x][y].setText(this.matrizbotones[x][y-1].getText());
+                    this.matrizbotones[x][y-1].setText("");
+                    SumarPuntuacion();
+                }
+            }
+        }
     }
 
     private boolean ComprobarDerrota() {
@@ -116,6 +164,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
     public void BacktoHub2048(View view) {
         Intent back = new Intent(this, MainActivity.class);
         startActivity(back);
+
     }
 
     public void NuevaPartida(View view) {
@@ -123,6 +172,13 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         this.finish();
         this.startActivity(intent);
 
+    }
+
+    private void SumarPuntuacion(){
+        TextView textView = findViewById(R.id.button20);
+        String score = String.valueOf(textView.getText());
+         int puntuacion = Integer.parseInt(score) + 1;
+        textView.setText(String.valueOf(puntuacion));
     }
 
     @Override
@@ -162,24 +218,25 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         if (Math.abs(velocityX) > Math.abs(velocityY)) {
 
             if (velocityX > 0) {
-                // Fling hacia la derecha
+                RigthMoviment();
 
                 GenerarNuevoNumero();
             } else {
-                // Fling hacia la izquierda
+                LeftMoviment();
 
                 GenerarNuevoNumero();
             }
         } else {
             if (velocityY > 0) {
-                // Fling hacia abajo
-
+                DownMoviment();
                 GenerarNuevoNumero();
 
 
             } else {
-                // Fling hacia arriba
+                UpMoviment();
                 GenerarNuevoNumero();
+
+
 
             }
         }
