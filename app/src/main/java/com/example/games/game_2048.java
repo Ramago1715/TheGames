@@ -41,51 +41,93 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
 
     }
-    private void UpMoviment(){
-        for (int x=0;x<=this.matrizbotones.length-2;x++){
-            for (int y=0;y<=this.matrizbotones.length-1;y++){
-                if(this.matrizbotones[x][y].getText().equals("")  && !this.matrizbotones[x+1][y].getText().equals("")) {
-                    this.matrizbotones[x][y].setText(this.matrizbotones[x + 1][y].getText());
-                    this.matrizbotones[x + 1][y].setText("");
-                    SumarPuntuacion();
+    private void UpMoviment() {
+        boolean movimeinto = true;
+        while (movimeinto == true) {
+            movimeinto = false;
+            for (int x = 0; x <= this.matrizbotones.length - 2; x++) {
+                for (int y = 0; y <= this.matrizbotones.length - 1; y++) {
+                    if (this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x + 1][y].getText().equals("")) {
+                        movimeinto = true;
+                        this.matrizbotones[x][y].setText(this.matrizbotones[x + 1][y].getText());
+                        this.matrizbotones[x + 1][y].setText("");
+
+                    } else if (this.matrizbotones[x + 1][y].getText().equals(this.matrizbotones[x][y].getText()) && !this.matrizbotones[x + 1][y].getText().equals("")) {
+                        String casilla = String.valueOf(this.matrizbotones[x + 1][y].getText());
+                        int valor_casilla = Integer.parseInt(casilla)*2;
+                        this.matrizbotones[x][y].setText(String.valueOf(valor_casilla));
+                        this.matrizbotones[x + 1][y].setText("");
+                        SumarPuntuacion();
+                    }
                 }
             }
         }
     }
 
-    private void DownMoviment(){
-        for (int x=this.matrizbotones.length-1;x>=1;x--){
-            for (int y=0;y<=this.matrizbotones.length-1;y++){
-                if(this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x-1][y].getText().equals("")){
-                    this.matrizbotones[x][y].setText(this.matrizbotones[x - 1][y].getText());
-                    this.matrizbotones[x - 1][y].setText("");
-                    SumarPuntuacion();
+    private void DownMoviment() {
+        boolean movimiento = true;
+        while (movimiento == true) {
+            movimiento = false;
+            for (int x = this.matrizbotones.length - 1; x >= 1; x--) {
+                for (int y = 0; y <= this.matrizbotones.length - 1; y++) {
+                    if (this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x - 1][y].getText().equals("")) {
+                        movimiento = true;
+                        this.matrizbotones[x][y].setText(this.matrizbotones[x - 1][y].getText());
+                        this.matrizbotones[x - 1][y].setText("");
 
+
+                    }else if (this.matrizbotones[x - 1][y].getText().equals(this.matrizbotones[x][y].getText()) && !this.matrizbotones[x - 1][y].getText().equals("")) {
+                        String casilla = String.valueOf(this.matrizbotones[x - 1][y].getText());
+                        int valor_casilla = Integer.parseInt(casilla)*2;
+                        this.matrizbotones[x][y].setText(String.valueOf(valor_casilla));
+                        this.matrizbotones[x - 1][y].setText("");
+                        SumarPuntuacion();
+                    }
                 }
             }
         }
     }
 
-    private void LeftMoviment(){
-        for (int x=0;x<=this.matrizbotones.length-1;x++){
-            for (int y=0;y<=this.matrizbotones.length-2;y++){
-                if(this.matrizbotones[x][y].getText().equals("")  && !this.matrizbotones[x][y+1].getText().equals("")) {
-                    this.matrizbotones[x][y].setText(this.matrizbotones[x][y+1].getText());
-                    this.matrizbotones[x][y+1].setText("");
-                    SumarPuntuacion();
+    private void LeftMoviment() {
+        boolean movimiento = true;
+        while (movimiento == true) {
+            movimiento = false;
+            for (int x = 0; x <= this.matrizbotones.length - 1; x++) {
+                for (int y = 0; y <= this.matrizbotones.length - 2; y++) {
+                    if (this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x][y + 1].getText().equals("")) {
+                        movimiento = true;
+                        this.matrizbotones[x][y].setText(this.matrizbotones[x][y + 1].getText());
+                        this.matrizbotones[x][y + 1].setText("");
+                    }else if (this.matrizbotones[x][y + 1].getText().equals(this.matrizbotones[x][y].getText()) && !this.matrizbotones[x][y + 1].getText().equals("")) {
+                        String casilla = String.valueOf(this.matrizbotones[x][y + 1].getText());
+                        int valor_casilla = Integer.parseInt(casilla)*2;
+                        this.matrizbotones[x][y].setText(String.valueOf(valor_casilla));
+                        this.matrizbotones[x][y + 1].setText("");
+                        SumarPuntuacion();
+                    }
                 }
             }
         }
     }
 
 
-    private void RigthMoviment(){
-        for (int x=0;x<=this.matrizbotones.length-1;x++){
-            for (int y=this.matrizbotones.length-1;y>=1;y--){
-                if(this.matrizbotones[x][y].getText().equals("")  && !this.matrizbotones[x][y-1].getText().equals("")) {
-                    this.matrizbotones[x][y].setText(this.matrizbotones[x][y-1].getText());
-                    this.matrizbotones[x][y-1].setText("");
-                    SumarPuntuacion();
+    private void RigthMoviment() {
+        boolean movimiento = true;
+        while (movimiento == true) {
+            movimiento = false;
+            for (int x = 0; x <= this.matrizbotones.length - 1; x++) {
+                for (int y = this.matrizbotones.length - 1; y >= 1; y--) {
+                    if (this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x][y - 1].getText().equals("")) {
+                        movimiento = true;
+                        this.matrizbotones[x][y].setText(this.matrizbotones[x][y - 1].getText());
+                        this.matrizbotones[x][y - 1].setText("");
+                    }else if (this.matrizbotones[x][y - 1].getText().equals(this.matrizbotones[x][y].getText()) && !this.matrizbotones[x][y - 1].getText().equals("")) {
+                        String casilla = String.valueOf(this.matrizbotones[x][y - 1].getText());
+                        int valor_casilla = Integer.parseInt(casilla)*2;
+                        this.matrizbotones[x][y].setText(String.valueOf(valor_casilla));
+                        this.matrizbotones[x][y - 1].setText("");
+                        SumarPuntuacion();
+                    }
                 }
             }
         }
@@ -153,6 +195,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         button.setTextColor(getResources().getColor(R.color.button_text_color));
         button.setTextColor(Color.WHITE);
         button.setTextSize(25);
+        button.setClickable(false);
 
 
         button.setLayoutParams(params);
