@@ -6,6 +6,7 @@ import androidx.gridlayout.widget.GridLayout;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 public class game_2048 extends AppCompatActivity implements GestureDetector.OnGestureListener {
     private Button[][] matrizbotones;
     private GestureDetector gestureDetector;
+    private boolean finalizarPartida;
 
 
     @Override
@@ -26,6 +28,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         GridLayout gridLayout = findViewById(R.id.GridLayout);
         int numColumns = 4;
         int numRows = 4;
+        this.finalizarPartida = false;
         gestureDetector = new GestureDetector(this, this);
         matrizbotones = new Button[4][4];
 
@@ -41,6 +44,49 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
 
     }
+    private void ColorearBotones(int x, int y){
+        String casilla = String.valueOf(this.matrizbotones[x][y].getText());
+        int valor_casilla = Integer.parseInt(casilla);
+        switch (valor_casilla){
+            case 2:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N2));
+                break;
+            case 4:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N4));
+                break;
+            case 8:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N8));
+                break;
+            case 16:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N16));
+                break;
+            case 32:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N32));
+                break;
+            case 64:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N64));
+                break;
+            case 128:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N128));
+                break;
+            case 256:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N256));
+                break;
+            case 512:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N512));
+                break;
+            case 1024:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N1024));
+                break;
+            case 2048:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N2048));
+                break;
+            default:
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+        }
+
+    }
+
     private void UpMoviment() {
         boolean movimeinto = true;
         while (movimeinto == true) {
@@ -50,14 +96,19 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                     if (this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x + 1][y].getText().equals("")) {
                         movimeinto = true;
                         this.matrizbotones[x][y].setText(this.matrizbotones[x + 1][y].getText());
+                        ColorearBotones(x,y);
                         this.matrizbotones[x + 1][y].setText("");
+                        this.matrizbotones[x + 1][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
 
                     } else if (this.matrizbotones[x + 1][y].getText().equals(this.matrizbotones[x][y].getText()) && !this.matrizbotones[x + 1][y].getText().equals("")) {
                         String casilla = String.valueOf(this.matrizbotones[x + 1][y].getText());
                         int valor_casilla = Integer.parseInt(casilla)*2;
                         this.matrizbotones[x][y].setText(String.valueOf(valor_casilla));
+                        ColorearBotones(x,y);
                         this.matrizbotones[x + 1][y].setText("");
+                        this.matrizbotones[x + 1][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
                         SumarPuntuacion();
+                        ComprobarVictoria(valor_casilla);
                     }
                 }
             }
@@ -73,15 +124,20 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                     if (this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x - 1][y].getText().equals("")) {
                         movimiento = true;
                         this.matrizbotones[x][y].setText(this.matrizbotones[x - 1][y].getText());
+                        ColorearBotones(x,y);
                         this.matrizbotones[x - 1][y].setText("");
+                        this.matrizbotones[x - 1][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
 
 
                     }else if (this.matrizbotones[x - 1][y].getText().equals(this.matrizbotones[x][y].getText()) && !this.matrizbotones[x - 1][y].getText().equals("")) {
                         String casilla = String.valueOf(this.matrizbotones[x - 1][y].getText());
                         int valor_casilla = Integer.parseInt(casilla)*2;
                         this.matrizbotones[x][y].setText(String.valueOf(valor_casilla));
+                        ColorearBotones(x,y);
                         this.matrizbotones[x - 1][y].setText("");
+                        this.matrizbotones[x - 1][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
                         SumarPuntuacion();
+                        ComprobarVictoria(valor_casilla);
                     }
                 }
             }
@@ -97,13 +153,18 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                     if (this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x][y + 1].getText().equals("")) {
                         movimiento = true;
                         this.matrizbotones[x][y].setText(this.matrizbotones[x][y + 1].getText());
+                        ColorearBotones(x,y);
                         this.matrizbotones[x][y + 1].setText("");
+                        this.matrizbotones[x][y + 1].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
                     }else if (this.matrizbotones[x][y + 1].getText().equals(this.matrizbotones[x][y].getText()) && !this.matrizbotones[x][y + 1].getText().equals("")) {
                         String casilla = String.valueOf(this.matrizbotones[x][y + 1].getText());
                         int valor_casilla = Integer.parseInt(casilla)*2;
                         this.matrizbotones[x][y].setText(String.valueOf(valor_casilla));
+                        ColorearBotones(x,y);
                         this.matrizbotones[x][y + 1].setText("");
+                        this.matrizbotones[x][y + 1].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
                         SumarPuntuacion();
+                        ComprobarVictoria(valor_casilla);
                     }
                 }
             }
@@ -120,19 +181,30 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                     if (this.matrizbotones[x][y].getText().equals("") && !this.matrizbotones[x][y - 1].getText().equals("")) {
                         movimiento = true;
                         this.matrizbotones[x][y].setText(this.matrizbotones[x][y - 1].getText());
+                        ColorearBotones(x,y);
                         this.matrizbotones[x][y - 1].setText("");
+                        this.matrizbotones[x][y - 1].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
                     }else if (this.matrizbotones[x][y - 1].getText().equals(this.matrizbotones[x][y].getText()) && !this.matrizbotones[x][y - 1].getText().equals("")) {
                         String casilla = String.valueOf(this.matrizbotones[x][y - 1].getText());
                         int valor_casilla = Integer.parseInt(casilla)*2;
                         this.matrizbotones[x][y].setText(String.valueOf(valor_casilla));
+                        ColorearBotones(x,y);
                         this.matrizbotones[x][y - 1].setText("");
+                        this.matrizbotones[x][y - 1].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
                         SumarPuntuacion();
+                        ComprobarVictoria(valor_casilla);
                     }
                 }
             }
         }
     }
 
+
+    private void ComprobarVictoria(int valor_casilla){
+        if (valor_casilla == 2024){
+            FinalizarPartida(false);
+        }
+    }
     private boolean ComprobarDerrota() {
         boolean derrota = true;
         int x = 0;
@@ -148,6 +220,24 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         return derrota;
 
     }
+    private void FinalizarPartida(boolean derrota){
+        this.finalizarPartida = true;
+        Button you = this.matrizbotones[1][1];
+        Button DV = this.matrizbotones[1][2];
+        if (derrota){
+            you.setText("YOU");
+            you.setBackgroundTintList(getResources().getColorStateList(R.color.derrota));
+            DV.setText("LOSE!");
+            DV.setBackgroundTintList(getResources().getColorStateList(R.color.derrota));
+
+        }else {
+            you.setText("YOU");
+            you.setBackgroundTintList(getResources().getColorStateList(R.color.victoria));
+            DV.setText("WIN!!!!");
+            DV.setBackgroundTintList(getResources().getColorStateList(R.color.victoria));
+        }
+
+    }
 
     private void GenerarNuevoNumero() {
         boolean asignado = false;
@@ -158,20 +248,13 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
             int y = (int) (Math.random() * 4);
             if (this.matrizbotones[x][y].getText().equals("")) {
                 this.matrizbotones[x][y].setText("2");
+                this.matrizbotones[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N2));
                 asignado = true;
 
-            } else if (contador > 7) {
+            } else if (contador > 4) {
                 if (ComprobarDerrota()) {
-                    Toast.makeText(this,"HAS PERDIDO PRINGADO",Toast.LENGTH_SHORT).show();
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Intent intent = new Intent(this, this.getClass());
+                    FinalizarPartida(true);
                     asignado = true;
-                    this.finish();
-                    this.startActivity(intent);
                 } else {
                     contador = 0;
                 }
@@ -258,29 +341,30 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (Math.abs(velocityX) > Math.abs(velocityY)) {
+        if(!this.finalizarPartida) {
+            if (Math.abs(velocityX) > Math.abs(velocityY)) {
 
-            if (velocityX > 0) {
-                RigthMoviment();
+                if (velocityX > 0) {
+                    RigthMoviment();
 
-                GenerarNuevoNumero();
+                    GenerarNuevoNumero();
+                } else {
+                    LeftMoviment();
+
+                    GenerarNuevoNumero();
+                }
             } else {
-                LeftMoviment();
-
-                GenerarNuevoNumero();
-            }
-        } else {
-            if (velocityY > 0) {
-                DownMoviment();
-                GenerarNuevoNumero();
+                if (velocityY > 0) {
+                    DownMoviment();
+                    GenerarNuevoNumero();
 
 
-            } else {
-                UpMoviment();
-                GenerarNuevoNumero();
+                } else {
+                    UpMoviment();
+                    GenerarNuevoNumero();
 
 
-
+                }
             }
         }
         return true;
