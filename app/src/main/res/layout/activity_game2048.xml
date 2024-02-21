@@ -7,6 +7,7 @@
     android:background="#faf8ef">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -90,9 +91,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#8f7a66"
+            android:onClick="NuevaPartida"
             android:text="NEW GAME"
-            android:textColor="#FFFF"
-            android:onClick="NuevaPartida"/>
+            android:textColor="#FFFF" />
 
     </LinearLayout>
 
@@ -100,31 +101,63 @@
         android:id="@+id/GridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#877d74"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="#877d74"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-
-        <Button
-            android:id="@+id/backtohub2048"
-            android:layout_width="150dp"
-            android:layout_height="77dp"
-            android:backgroundTint="#8f7a66"
-            android:onClick="BacktoHub2048"
-            android:text="BACK"
-            android:textColor="#FFFF"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="79dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/backtohub2048"
+                android:layout_width="181dp"
+                android:layout_height="77dp"
+                android:backgroundTint="#8f7a66"
+                android:onClick="BacktoHub2048"
+                android:text="BACK"
+                android:textColor="#FFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="83dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="#8f7a66"
+            android:src="@drawable/baseline_repeat_one_24"
+            android:background="@drawable/rounded_button"
+            android:onClick=""/>
+
     </LinearLayout>
 
     <TextView
