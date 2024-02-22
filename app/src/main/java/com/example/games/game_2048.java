@@ -1,8 +1,11 @@
 package com.example.games;
 
+import static com.example.games.R.*;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -21,34 +24,70 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
     private Button[][] tablero;
     private Button[][] tableroresplado;
     private Boolean respaldo;
+    private String score;
     private GestureDetector gestureDetector;
     private boolean finalizarPartida;
-
+    private CountDownTimer timer;
+    int minuts = 5;
+    int seconds = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game2048);
-        GridLayout gridLayout = findViewById(R.id.GridLayout);
+        setContentView(layout.activity_game2048);
+        this.respaldo = false;
+        this.score = "";
+        this.finalizarPartida = false;
+        this.gestureDetector = new GestureDetector(this, this);
+        this.tableroresplado = new Button[4][4];
+        this.tablero = new Button[4][4];
+        InitLayout();
+        InitTimer();
+        GenerarNuevoNumero();
+        GenerarNuevoNumero();
+    }
+
+    private void InitLayout() {
+        GridLayout gridLayout = findViewById(id.GridLayout);
         int numColumns = 4;
         int numRows = 4;
-        this.finalizarPartida = false;
-        gestureDetector = new GestureDetector(this, this);
-        tableroresplado = new Button[4][4];
-        tablero = new Button[4][4];
-        respaldo = false;
         gridLayout.setColumnCount(numColumns);
         gridLayout.setRowCount(numRows);
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numColumns; col++) {
                 this.tablero[row][col] = CreatingButtons(row, col, gridLayout);
-
             }
         }
-        GenerarNuevoNumero();
-        GenerarNuevoNumero();
+    }
 
+    private void InitTimer() {
+        int tiempo = this.minuts * 60 + this.seconds;
+        this.timer = new CountDownTimer((tiempo) * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (seconds == 0) {
+                    minuts--;
 
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+                TextView time = findViewById(id.Timer);
+                time.setText(String.format("%02d:%02d", minuts, seconds));
+                if((minuts*60+seconds)*1000<(tiempo*1000)/2){
+                    time.setTextColor(getResources().getColor(color.naranjaPeligro));
+                }
+                if((minuts*60+seconds)*1000<(tiempo*1000)/3 ) {
+                    time.setTextColor(Color.RED);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                FinalizarPartida(true);
+            }
+        };
+        timer.start();
     }
 
     private void ColorearBotones(int x, int y) {
@@ -56,40 +95,40 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         int valor_casilla = Integer.parseInt(casilla);
         switch (valor_casilla) {
             case 2:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N2));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N2));
                 break;
             case 4:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N4));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N4));
                 break;
             case 8:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N8));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N8));
                 break;
             case 16:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N16));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N16));
                 break;
             case 32:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N32));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N32));
                 break;
             case 64:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N64));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N64));
                 break;
             case 128:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N128));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N128));
                 break;
             case 256:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N256));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N256));
                 break;
             case 512:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N512));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N512));
                 break;
             case 1024:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N1024));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N1024));
                 break;
             case 2048:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N2048));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N2048));
                 break;
             default:
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
         }
 
     }
@@ -106,7 +145,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                         this.tablero[x][y].setText(this.tablero[x + 1][y].getText());
                         ColorearBotones(x, y);
                         this.tablero[x + 1][y].setText("");
-                        this.tablero[x + 1][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+                        this.tablero[x + 1][y].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
 
                     } else if (this.tablero[x + 1][y].getText().equals(this.tablero[x][y].getText()) && !this.tablero[x + 1][y].getText().equals("")) {
                         String casilla = String.valueOf(this.tablero[x + 1][y].getText());
@@ -114,7 +153,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                         this.tablero[x][y].setText(String.valueOf(valor_casilla));
                         ColorearBotones(x, y);
                         this.tablero[x + 1][y].setText("");
-                        this.tablero[x + 1][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+                        this.tablero[x + 1][y].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
                         SumarPuntuacion();
                         ComprobarVictoria(valor_casilla);
                     }
@@ -123,7 +162,6 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         }
 
     }
-
 
     private void DownMoviment() {
         boolean movimiento = true;
@@ -137,7 +175,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                         this.tablero[x][y].setText(this.tablero[x - 1][y].getText());
                         ColorearBotones(x, y);
                         this.tablero[x - 1][y].setText("");
-                        this.tablero[x - 1][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+                        this.tablero[x - 1][y].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
 
 
                     } else if (this.tablero[x - 1][y].getText().equals(this.tablero[x][y].getText()) && !this.tablero[x - 1][y].getText().equals("")) {
@@ -146,7 +184,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                         this.tablero[x][y].setText(String.valueOf(valor_casilla));
                         ColorearBotones(x, y);
                         this.tablero[x - 1][y].setText("");
-                        this.tablero[x - 1][y].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+                        this.tablero[x - 1][y].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
                         SumarPuntuacion();
                         ComprobarVictoria(valor_casilla);
                     }
@@ -168,14 +206,14 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                         this.tablero[x][y].setText(this.tablero[x][y + 1].getText());
                         ColorearBotones(x, y);
                         this.tablero[x][y + 1].setText("");
-                        this.tablero[x][y + 1].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+                        this.tablero[x][y + 1].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
                     } else if (this.tablero[x][y + 1].getText().equals(this.tablero[x][y].getText()) && !this.tablero[x][y + 1].getText().equals("")) {
                         String casilla = String.valueOf(this.tablero[x][y + 1].getText());
                         int valor_casilla = Integer.parseInt(casilla) * 2;
                         this.tablero[x][y].setText(String.valueOf(valor_casilla));
                         ColorearBotones(x, y);
                         this.tablero[x][y + 1].setText("");
-                        this.tablero[x][y + 1].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+                        this.tablero[x][y + 1].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
                         SumarPuntuacion();
                         ComprobarVictoria(valor_casilla);
                     }
@@ -184,7 +222,6 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         }
 
     }
-
 
     private void RigthMoviment() {
         boolean movimiento = true;
@@ -198,14 +235,14 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                         this.tablero[x][y].setText(this.tablero[x][y - 1].getText());
                         ColorearBotones(x, y);
                         this.tablero[x][y - 1].setText("");
-                        this.tablero[x][y - 1].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+                        this.tablero[x][y - 1].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
                     } else if (this.tablero[x][y - 1].getText().equals(this.tablero[x][y].getText()) && !this.tablero[x][y - 1].getText().equals("")) {
                         String casilla = String.valueOf(this.tablero[x][y - 1].getText());
                         int valor_casilla = Integer.parseInt(casilla) * 2;
                         this.tablero[x][y].setText(String.valueOf(valor_casilla));
                         ColorearBotones(x, y);
                         this.tablero[x][y - 1].setText("");
-                        this.tablero[x][y - 1].setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
+                        this.tablero[x][y - 1].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
                         SumarPuntuacion();
                         ComprobarVictoria(valor_casilla);
                     }
@@ -216,8 +253,10 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
     }
 
     private void GenerarRespaldo() {
-        FloatingActionButton rewind = findViewById(R.id.rewind);
-        rewind.setBackgroundTintList(getResources().getColorStateList(R.color.botones));
+        FloatingActionButton rewind = findViewById(id.rewind);
+        rewind.setBackgroundTintList(getResources().getColorStateList(color.botones));
+        TextView textView = findViewById(id.Score);
+        this.score = String.valueOf(textView.getText());
         for (int i = 0; i < this.tablero.length; i++) {
             for (int j = 0; j < this.tablero[i].length; j++) {
                 Button botonOriginal = this.tablero[i][j];
@@ -232,7 +271,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
     }
 
     public void RewindMovimiento(View view) {
-        FloatingActionButton rewind = findViewById(R.id.rewind);
+        FloatingActionButton rewind = findViewById(id.rewind);
         if (respaldo) {
             for (int i = 0; i < this.tableroresplado.length; i++) {
                 for (int j = 0; j < this.tableroresplado[i].length; j++) {
@@ -245,11 +284,12 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                 }
             }
             respaldo = false;
-            rewind.setBackgroundTintList(getResources().getColorStateList(R.color.derrota));
+            rewind.setBackgroundTintList(getResources().getColorStateList(color.derrota));
+            TextView textView = findViewById(id.Score);
+            textView.setText(this.score);
         } else {
             Toast.makeText(this, "No puedes rebobinar", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void ComprobarVictoria(int valor_casilla) {
@@ -280,18 +320,19 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         Button DV = this.tablero[1][2];
         if (derrota) {
             you.setText("YOU");
-            you.setBackgroundTintList(getResources().getColorStateList(R.color.derrota));
+            you.setBackgroundTintList(getResources().getColorStateList(color.derrota));
             DV.setText("LOSE!");
-            DV.setBackgroundTintList(getResources().getColorStateList(R.color.derrota));
-            ImageButton rewind = findViewById(R.id.rewind);
+            DV.setBackgroundTintList(getResources().getColorStateList(color.derrota));
+            ImageButton rewind = findViewById(id.rewind);
             rewind.setClickable(false);
-
-
+            rewind.setBackgroundTintList(getResources().getColorStateList(color.derrota));
+            timer.cancel();
         } else {
             you.setText("YOU");
-            you.setBackgroundTintList(getResources().getColorStateList(R.color.victoria));
+            you.setBackgroundTintList(getResources().getColorStateList(color.victoria));
             DV.setText("WIN!!!!");
-            DV.setBackgroundTintList(getResources().getColorStateList(R.color.victoria));
+            DV.setBackgroundTintList(getResources().getColorStateList(color.victoria));
+            timer.cancel();
         }
 
     }
@@ -305,7 +346,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
             int y = (int) (Math.random() * 4);
             if (this.tablero[x][y].getText().equals("")) {
                 this.tablero[x][y].setText("2");
-                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(R.color.N2));
+                this.tablero[x][y].setBackgroundTintList(getResources().getColorStateList(color.N2));
                 asignado = true;
 
             } else if (contador > 4) {
@@ -331,8 +372,8 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         params.setGravity(Gravity.FILL);
         params.setGravity(Gravity.CENTER);
 
-        button.setBackgroundTintList(getResources().getColorStateList(R.color.button_background_tint));
-        button.setTextColor(getResources().getColor(R.color.button_text_color));
+        button.setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
+        button.setTextColor(getResources().getColor(color.button_text_color));
         button.setTextColor(Color.WHITE);
         button.setTextSize(25);
         button.setClickable(false);
@@ -355,10 +396,11 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         this.finish();
         this.startActivity(intent);
 
+
     }
 
     private void SumarPuntuacion() {
-        TextView textView = findViewById(R.id.button20);
+        TextView textView = findViewById(id.Score);
         String score = String.valueOf(textView.getText());
         int puntuacion = Integer.parseInt(score) + 1;
         textView.setText(String.valueOf(puntuacion));
@@ -402,39 +444,23 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
             if (Math.abs(velocityX) > Math.abs(velocityY)) {
 
                 if (velocityX > 0) {
-
                     RigthMoviment();
                     GenerarNuevoNumero();
-
                 } else {
-
                     LeftMoviment();
                     GenerarNuevoNumero();
-
                 }
             } else {
                 if (velocityY > 0) {
-
                     DownMoviment();
                     GenerarNuevoNumero();
-
-
                 } else {
-
                     UpMoviment();
                     GenerarNuevoNumero();
-
-
                 }
             }
         }
         return true;
     }
-
-    private Button dev(Button[][] boton, int x, int y) {
-
-        return boton[x][y];
-    }
-
 }
 

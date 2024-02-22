@@ -18,4 +18,5 @@
     <color name="N2048">#ba9823</color>
     <color name="derrota">#6b645d</color>
     <color name="victoria">#ffd40e</color>
+    <color name="naranjaPeligro">#ffa900</color>
 </resources>
