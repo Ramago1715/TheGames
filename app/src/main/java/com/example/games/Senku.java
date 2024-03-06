@@ -9,7 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
-public class senku extends AppCompatActivity {
+public class Senku extends AppCompatActivity {
     private int buttonIdCounter = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class senku extends AppCompatActivity {
 
         }
     }
-    public void backtohubsenku(View view){
+    public void backToHubSenku(View view){
         Intent back = new Intent(this, MainActivity.class);
         startActivity(back);
     }

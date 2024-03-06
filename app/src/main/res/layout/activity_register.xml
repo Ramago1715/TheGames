@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Register">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Imagen -->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:layout_marginTop="30dp"
+            app:srcCompat="@mipmap/ic_cookie" />
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/editTextText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="text"
+            android:text="Cookies Games"
+            android:textSize="20sp" />
+
+        <!-- Campos de registro -->
+        <TextView
+            android:id="@+id/textViewUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Usuario"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/UserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Ingresa tu usuario"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textViewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Correo Electrónico"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="textEmailAddress"
+            android:layout_gravity="center"
+            android:hint="Ingresa tu correo electrónico" />
+
+        <TextView
+            android:id="@+id/textViewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Contraseña"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="textPassword"
+            android:layout_gravity="center"
+            android:hint="Ingresa tu contraseña" />
+
+        <TextView
+            android:id="@+id/textViewConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Confirmar Contraseña"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/ConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="textPassword"
+            android:layout_gravity="center"
+            android:hint="Confirma tu contraseña" />
+
+        <!-- Botón de registro -->
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Registrarse"
+            android:onClick="registro"/>
+
+        <!-- Enlace a la página de inicio de sesión -->
+        <TextView
+            android:id="@+id/ErrorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#F80606"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/textViewAlreadyHaveAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"
+            android:text="¿Ya tienes una cuenta?"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/buttonGoToLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Inicia Sesión"
+            android:onClick="login"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@
         android:text="SENKU"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="gosenku"/>
+        android:onClick="goSenku"/>
 
     <Button
         android:id="@+id/B2048"

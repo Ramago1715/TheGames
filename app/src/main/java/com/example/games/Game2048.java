@@ -18,9 +18,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.gridlayout.widget.GridLayout;
 
+import com.example.games.BD.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class game_2048 extends AppCompatActivity implements GestureDetector.OnGestureListener {
+public class Game2048 extends AppCompatActivity implements GestureDetector.OnGestureListener {
     private Button[][] tablero;
     private Button[][] tableroresplado;
     private Boolean respaldo;
@@ -31,6 +32,9 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
     int minuts = 5;
     int seconds = 30;
 
+    int numColumns = 4;
+    int numRows = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,28 +43,26 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         this.score = "";
         this.finalizarPartida = false;
         this.gestureDetector = new GestureDetector(this, this);
-        this.tableroresplado = new Button[4][4];
-        this.tablero = new Button[4][4];
-        InitLayout();
-        InitTimer();
-        GenerarNuevoNumero();
-        GenerarNuevoNumero();
+        this.tableroresplado = new Button[numRows][numColumns];
+        this.tablero = new Button[numRows][numColumns];
+        initLayout();
+        initTimer();
+        generarNuevoNumero();
+        generarNuevoNumero();
     }
 
-    private void InitLayout() {
+    private void initLayout() {
         GridLayout gridLayout = findViewById(id.GridLayout);
-        int numColumns = 4;
-        int numRows = 4;
         gridLayout.setColumnCount(numColumns);
         gridLayout.setRowCount(numRows);
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numColumns; col++) {
-                this.tablero[row][col] = CreatingButtons(row, col, gridLayout);
+                this.tablero[row][col] = creatingButtons(row, col, gridLayout);
             }
         }
     }
 
-    private void InitTimer() {
+    private void initTimer() {
         int tiempo = this.minuts * 60 + this.seconds;
         this.timer = new CountDownTimer((tiempo) * 1000, 1000) {
             @Override
@@ -84,13 +86,13 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
             @Override
             public void onFinish() {
-                FinalizarPartida(true);
+                finalizarPartida(true);
             }
         };
         timer.start();
     }
 
-    private void ColorearBotones(int x, int y) {
+    private void colorearBotones(int x, int y) {
         String casilla = String.valueOf(this.tablero[x][y].getText());
         int valor_casilla = Integer.parseInt(casilla);
         switch (valor_casilla) {
@@ -133,9 +135,9 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    private void UpMoviment() {
+    private void upMoviment() {
         boolean movimeinto = true;
-        GenerarRespaldo();
+        generarRespaldo();
         while (movimeinto == true) {
             movimeinto = false;
             for (int x = 0; x <= this.tablero.length - 2; x++) {
@@ -143,7 +145,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                     if (this.tablero[x][y].getText().equals("") && !this.tablero[x + 1][y].getText().equals("")) {
                         movimeinto = true;
                         this.tablero[x][y].setText(this.tablero[x + 1][y].getText());
-                        ColorearBotones(x, y);
+                        colorearBotones(x, y);
                         this.tablero[x + 1][y].setText("");
                         this.tablero[x + 1][y].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
 
@@ -151,11 +153,11 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                         String casilla = String.valueOf(this.tablero[x + 1][y].getText());
                         int valor_casilla = Integer.parseInt(casilla) * 2;
                         this.tablero[x][y].setText(String.valueOf(valor_casilla));
-                        ColorearBotones(x, y);
+                        colorearBotones(x, y);
                         this.tablero[x + 1][y].setText("");
                         this.tablero[x + 1][y].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
-                        SumarPuntuacion();
-                        ComprobarVictoria(valor_casilla);
+                        sumarPuntuacion();
+                        comprobarVictoria(valor_casilla);
                     }
                 }
             }
@@ -163,9 +165,9 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    private void DownMoviment() {
+    private void downMoviment() {
         boolean movimiento = true;
-        GenerarRespaldo();
+        generarRespaldo();
         while (movimiento == true) {
             movimiento = false;
             for (int x = this.tablero.length - 1; x >= 1; x--) {
@@ -173,7 +175,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                     if (this.tablero[x][y].getText().equals("") && !this.tablero[x - 1][y].getText().equals("")) {
                         movimiento = true;
                         this.tablero[x][y].setText(this.tablero[x - 1][y].getText());
-                        ColorearBotones(x, y);
+                        colorearBotones(x, y);
                         this.tablero[x - 1][y].setText("");
                         this.tablero[x - 1][y].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
 
@@ -182,11 +184,11 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                         String casilla = String.valueOf(this.tablero[x - 1][y].getText());
                         int valor_casilla = Integer.parseInt(casilla) * 2;
                         this.tablero[x][y].setText(String.valueOf(valor_casilla));
-                        ColorearBotones(x, y);
+                        colorearBotones(x, y);
                         this.tablero[x - 1][y].setText("");
                         this.tablero[x - 1][y].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
-                        SumarPuntuacion();
-                        ComprobarVictoria(valor_casilla);
+                        sumarPuntuacion();
+                        comprobarVictoria(valor_casilla);
                     }
                 }
             }
@@ -194,9 +196,9 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    private void LeftMoviment() {
+    private void leftMoviment() {
         boolean movimiento = true;
-        GenerarRespaldo();
+        generarRespaldo();
         while (movimiento == true) {
             movimiento = false;
             for (int x = 0; x <= this.tablero.length - 1; x++) {
@@ -204,18 +206,18 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                     if (this.tablero[x][y].getText().equals("") && !this.tablero[x][y + 1].getText().equals("")) {
                         movimiento = true;
                         this.tablero[x][y].setText(this.tablero[x][y + 1].getText());
-                        ColorearBotones(x, y);
+                        colorearBotones(x, y);
                         this.tablero[x][y + 1].setText("");
                         this.tablero[x][y + 1].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
                     } else if (this.tablero[x][y + 1].getText().equals(this.tablero[x][y].getText()) && !this.tablero[x][y + 1].getText().equals("")) {
                         String casilla = String.valueOf(this.tablero[x][y + 1].getText());
                         int valor_casilla = Integer.parseInt(casilla) * 2;
                         this.tablero[x][y].setText(String.valueOf(valor_casilla));
-                        ColorearBotones(x, y);
+                        colorearBotones(x, y);
                         this.tablero[x][y + 1].setText("");
                         this.tablero[x][y + 1].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
-                        SumarPuntuacion();
-                        ComprobarVictoria(valor_casilla);
+                        sumarPuntuacion();
+                        comprobarVictoria(valor_casilla);
                     }
                 }
             }
@@ -223,9 +225,9 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    private void RigthMoviment() {
+    private void rigthMoviment() {
         boolean movimiento = true;
-        GenerarRespaldo();
+        generarRespaldo();
         while (movimiento == true) {
             movimiento = false;
             for (int x = 0; x <= this.tablero.length - 1; x++) {
@@ -233,18 +235,18 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                     if (this.tablero[x][y].getText().equals("") && !this.tablero[x][y - 1].getText().equals("")) {
                         movimiento = true;
                         this.tablero[x][y].setText(this.tablero[x][y - 1].getText());
-                        ColorearBotones(x, y);
+                        colorearBotones(x, y);
                         this.tablero[x][y - 1].setText("");
                         this.tablero[x][y - 1].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
                     } else if (this.tablero[x][y - 1].getText().equals(this.tablero[x][y].getText()) && !this.tablero[x][y - 1].getText().equals("")) {
                         String casilla = String.valueOf(this.tablero[x][y - 1].getText());
                         int valor_casilla = Integer.parseInt(casilla) * 2;
                         this.tablero[x][y].setText(String.valueOf(valor_casilla));
-                        ColorearBotones(x, y);
+                        colorearBotones(x, y);
                         this.tablero[x][y - 1].setText("");
                         this.tablero[x][y - 1].setBackgroundTintList(getResources().getColorStateList(color.button_background_tint));
-                        SumarPuntuacion();
-                        ComprobarVictoria(valor_casilla);
+                        sumarPuntuacion();
+                        comprobarVictoria(valor_casilla);
                     }
                 }
             }
@@ -252,7 +254,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    private void GenerarRespaldo() {
+    private void generarRespaldo() {
         FloatingActionButton rewind = findViewById(id.rewind);
         rewind.setBackgroundTintList(getResources().getColorStateList(color.botones));
         TextView textView = findViewById(id.Score);
@@ -270,7 +272,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    public void RewindMovimiento(View view) {
+    public void rewindMovimiento(View view) {
         FloatingActionButton rewind = findViewById(id.rewind);
         if (respaldo) {
             for (int i = 0; i < this.tableroresplado.length; i++) {
@@ -292,13 +294,13 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         }
     }
 
-    private void ComprobarVictoria(int valor_casilla) {
+    private void comprobarVictoria(int valor_casilla) {
         if (valor_casilla == 2024) {
-            FinalizarPartida(false);
+            finalizarPartida(false);
         }
     }
 
-    private boolean ComprobarDerrota() {
+    private boolean comprobarDerrota() {
         boolean derrota = true;
         int x = 0;
         while (x <= this.tablero.length - 1 && derrota == true) {
@@ -314,7 +316,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    private void FinalizarPartida(boolean derrota) {
+    private void finalizarPartida(boolean derrota) {
         this.finalizarPartida = true;
         Button you = this.tablero[1][1];
         Button DV = this.tablero[1][2];
@@ -337,7 +339,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    private void GenerarNuevoNumero() {
+    private void generarNuevoNumero() {
         boolean asignado = false;
         int contador = 0;
         while (!asignado) {
@@ -350,8 +352,8 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
                 asignado = true;
 
             } else if (contador > 4) {
-                if (ComprobarDerrota()) {
-                    FinalizarPartida(true);
+                if (comprobarDerrota()) {
+                    finalizarPartida(true);
                     asignado = true;
                 } else {
                     contador = 0;
@@ -361,7 +363,7 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    private Button CreatingButtons(int row, int col, GridLayout gridLayout) {
+    private Button creatingButtons(int row, int col, GridLayout gridLayout) {
         Button button = new Button(this);
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
 
@@ -385,13 +387,13 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
         return button;
     }
 
-    public void BacktoHub2048(View view) {
+    public void backtoHub2048(View view) {
         Intent back = new Intent(this, MainActivity.class);
         startActivity(back);
 
     }
 
-    public void NuevaPartida(View view) {
+    public void nuevaPartida(View view) {
         Intent intent = new Intent(this, this.getClass());
         this.finish();
         this.startActivity(intent);
@@ -399,13 +401,12 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
 
     }
 
-    private void SumarPuntuacion() {
+    private void sumarPuntuacion() {
         TextView textView = findViewById(id.Score);
         String score = String.valueOf(textView.getText());
         int puntuacion = Integer.parseInt(score) + 1;
         textView.setText(String.valueOf(puntuacion));
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -444,19 +445,19 @@ public class game_2048 extends AppCompatActivity implements GestureDetector.OnGe
             if (Math.abs(velocityX) > Math.abs(velocityY)) {
 
                 if (velocityX > 0) {
-                    RigthMoviment();
-                    GenerarNuevoNumero();
+                    rigthMoviment();
+                    generarNuevoNumero();
                 } else {
-                    LeftMoviment();
-                    GenerarNuevoNumero();
+                    leftMoviment();
+                    generarNuevoNumero();
                 }
             } else {
                 if (velocityY > 0) {
-                    DownMoviment();
-                    GenerarNuevoNumero();
+                    downMoviment();
+                    generarNuevoNumero();
                 } else {
-                    UpMoviment();
-                    GenerarNuevoNumero();
+                    upMoviment();
+                    generarNuevoNumero();
                 }
             }
         }

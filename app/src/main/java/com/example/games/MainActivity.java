@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     public int puntuacion;
@@ -15,12 +14,32 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        System.currentTimeMillis();
+        super.onResume();
+    }
+
     public void go2048(View view){
-        Intent go2048 = new Intent(this, game_2048.class);
+        Intent go2048 = new Intent(this, Game2048.class);
         startActivity(go2048);
     }
-    public void gosenku(View view){
-        Intent gosenku = new Intent(this, senku.class);
+    public void goSenku(View view){
+        Intent gosenku = new Intent(this, Senku.class);
         startActivity(gosenku);
+    }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
     }
 }

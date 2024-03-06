@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InicioSesion">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:layout_marginTop="30dp"
+            app:srcCompat="@mipmap/ic_cookie" />
+
+
+        <TextView
+            android:id="@+id/editTextText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="text"
+            android:text="Cookies Games"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Inicio de Sesion"
+            android:textSize="48sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:text="EMAIL"
+            android:gravity="center" />
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="Introduce tu email"
+            android:inputType="textEmailAddress" />
+
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:text="PASSWORD"
+            android:gravity="center" />
+
+        <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="Introduce tu contraseña"
+            android:inputType="textPassword" />
+
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="254dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="7dp"
+            android:text="Iniciar Sesión" />
+
+
+        <TextView
+            android:id="@+id/ErrorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#F80606"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/textViewNoAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:text="¿No tienes cuenta?"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/buttonGoToRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Regístrate"
+            android:onClick="register"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".senku">
+    tools:context=".Senku">
 
     <Button
         android:id="@+id/backtohubsenku"
         android:layout_width="150dp"
         android:layout_height="77dp"
         android:backgroundTint="#8f7a66"
-        android:onClick="backtohubsenku"
+        android:onClick="backToHubSenku"
         android:text="BACK"
         android:textColor="#FFFF"
         app:layout_constraintBottom_toBottomOf="parent"

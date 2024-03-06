@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
+import com.example.games.BD.GameDB;
 
 public class Splash extends AppCompatActivity {
 
@@ -16,11 +19,11 @@ public class Splash extends AppCompatActivity {
     private ImageView imageView;
     private TextView textView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
         imageView = findViewById(R.id.cookieicon);
         textView = findViewById(R.id.cookietext);
 
@@ -32,13 +35,17 @@ public class Splash extends AppCompatActivity {
         Animation slideUpAnimationForText = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         textView.startAnimation(slideUpAnimationForText);
 
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(Splash.this, MainActivity.class);
+                Intent intent = new Intent(Splash.this, InicioSesion.class);
                 startActivity(intent);
                 finish();
             }
         }, SPLASH_TIME_OUT);
     }
+
+
 }
