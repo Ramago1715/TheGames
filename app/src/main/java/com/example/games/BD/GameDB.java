@@ -12,7 +12,7 @@ public abstract class GameDB extends RoomDatabase{
     public static synchronized GameDB getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    GameDB.class, "nombre-base-datos").build();
+                    GameDB.class, "BD").build();
         }
         return INSTANCE;
     }

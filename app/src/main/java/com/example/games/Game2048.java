@@ -18,8 +18,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.gridlayout.widget.GridLayout;
 
+import com.example.games.BD.GameDB;
 import com.example.games.BD.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Game2048 extends AppCompatActivity implements GestureDetector.OnGestureListener {
     private Button[][] tablero;
@@ -34,11 +41,17 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
 
     int numColumns = 4;
     int numRows = 4;
+    private GameDB db;
+    private ExecutorService executor;
+    private Usuario usuario;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_game2048);
+        this.db = GameDB.getInstance(getApplicationContext());
+        this.executor = Executors.newSingleThreadExecutor();
         this.respaldo = false;
         this.score = "";
         this.finalizarPartida = false;
@@ -49,6 +62,8 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
         initTimer();
         generarNuevoNumero();
         generarNuevoNumero();
+        Intent intent = getIntent();
+        this.usuario = (Usuario) intent.getSerializableExtra("usuario");
     }
 
     private void initLayout() {
@@ -69,7 +84,6 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
             public void onTick(long millisUntilFinished) {
                 if (seconds == 0) {
                     minuts--;
-
                     seconds = 59;
                 } else {
                     seconds--;
@@ -388,8 +402,7 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
     }
 
     public void backtoHub2048(View view) {
-        Intent back = new Intent(this, MainActivity.class);
-        startActivity(back);
+        startActivity(guardarDatosDeSession());
 
     }
 
@@ -462,6 +475,11 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
             }
         }
         return true;
+    }
+    private Intent guardarDatosDeSession(){
+        Intent inicio = new Intent(this, MainActivity.class);
+        inicio.putExtra("usuario",this.usuario);
+        return inicio;
     }
 }
 

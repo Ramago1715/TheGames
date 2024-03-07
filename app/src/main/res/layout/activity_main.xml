@@ -6,34 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="64dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/rounded_shape"
+        android:src="@mipmap/trofeo_foreground"
+        app:borderWidth="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="81dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="12dp"
+        android:src="@mipmap/fotodeperfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/userNameMainActivity"
+        android:layout_width="81dp"
+        android:layout_height="21dp"
+        android:gravity="center"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="HUB DE JUEGOS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="20dp"/>
-
-    <Button
-        android:id="@+id/gosenku"
-        android:layout_width="150dp"
-        android:layout_height="77dp"
-        android:text="SENKU"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:onClick="goSenku"/>
-
-    <Button
-        android:id="@+id/B2048"
-        android:layout_width="150dp"
-        android:layout_height="77dp"
-        android:text="2048"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="go2048"/>
+        app:layout_constraintVertical_bias="0.72" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,7 +52,7 @@
             android:gravity="center" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/EmailLogin"
             android:layout_width="254dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -70,7 +70,7 @@
             android:gravity="center" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/PasswordLogin"
             android:layout_width="254dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -84,7 +84,8 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="7dp"
-            android:text="Iniciar Sesión" />
+            android:text="Iniciar Sesión"
+            android:onClick="iniciosesion"/>
 
 
         <TextView

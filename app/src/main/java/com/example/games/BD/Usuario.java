@@ -3,15 +3,24 @@ package com.example.games.BD;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.Serializable;
+
 @Entity(tableName = "usuarios")
-public class Usuario{
+public class Usuario implements Serializable{
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String user = null;
-    private String email = null;
-    private byte[] fotoPerfil = null;
-    private String password = null;
-    private int bestScore = 0;
+    @Nullable
+    private String user;
+
+    private String email;
+    @Nullable
+    private byte[] fotoPerfil;
+    private String password;
+    @Nullable
+    private int bestScore;
 
     public int getId() {
         return id;
