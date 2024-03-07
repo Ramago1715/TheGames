@@ -76,6 +76,7 @@ public class Register extends AppCompatActivity {
             usuario.setEmail(String.valueOf(email.getText()));
             usuario.setUser(String.valueOf(username.getText()));
             usuario.setPassword(String.valueOf(password.getText()));
+            usuario.setFotoPerfil(null);
             executor.execute(new Runnable() {
                 @Override
                 public void run() {

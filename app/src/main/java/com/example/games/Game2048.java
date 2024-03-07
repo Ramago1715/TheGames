@@ -44,6 +44,7 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
     private GameDB db;
     private ExecutorService executor;
     private Usuario usuario;
+    private int bestS;
 
 
     @Override
@@ -64,6 +65,10 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
         generarNuevoNumero();
         Intent intent = getIntent();
         this.usuario = (Usuario) intent.getSerializableExtra("usuario");
+        TextView bestscore = findViewById(R.id.sc);
+        this.bestS = mayorPuntaje(this.usuario.getEmail());
+        bestscore.setText(String.valueOf(bestS));
+
     }
 
     private void initLayout() {
@@ -343,12 +348,14 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
             rewind.setClickable(false);
             rewind.setBackgroundTintList(getResources().getColorStateList(color.derrota));
             timer.cancel();
+            updateBestScore(this.usuario);
         } else {
             you.setText("YOU");
             you.setBackgroundTintList(getResources().getColorStateList(color.victoria));
             DV.setText("WIN!!!!");
             DV.setBackgroundTintList(getResources().getColorStateList(color.victoria));
             timer.cancel();
+            updateBestScore(this.usuario);
         }
 
     }
@@ -402,14 +409,14 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
     }
 
     public void backtoHub2048(View view) {
-        startActivity(guardarDatosDeSession());
+        startActivity(guardarDatosDeSession(new MainActivity()));
 
     }
 
     public void nuevaPartida(View view) {
-        Intent intent = new Intent(this, this.getClass());
+        this.timer.cancel();
         this.finish();
-        this.startActivity(intent);
+        this.startActivity(guardarDatosDeSession(this));
 
 
     }
@@ -476,8 +483,37 @@ public class Game2048 extends AppCompatActivity implements GestureDetector.OnGes
         }
         return true;
     }
-    private Intent guardarDatosDeSession(){
-        Intent inicio = new Intent(this, MainActivity.class);
+    private int mayorPuntaje(String email){
+        Future<Integer> future = executor.submit(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return db.LeaderBoardDAO().getUsuarioMayorPuntaje(email);
+            }
+        });
+
+        try {
+             return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private void updateBestScore(Usuario usuario){
+        if (this.bestS<Integer.parseInt(this.score)){
+            this.usuario.setBestScore(Integer.parseInt(this.score));
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    db.LeaderBoardDAO().Update(usuario);
+                }
+            });
+
+        }
+    }
+
+    private Intent guardarDatosDeSession(AppCompatActivity app){
+        Intent inicio = new Intent(this,app.getClass() );
         inicio.putExtra("usuario",this.usuario);
         return inicio;
     }

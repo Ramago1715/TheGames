@@ -17,10 +17,10 @@ public class Usuario implements Serializable{
 
     private String email;
     @Nullable
-    private byte[] fotoPerfil;
+    private byte[] fotoPerfil = null;
     private String password;
     @Nullable
-    private int bestScore;
+    private int bestScore = 0;
 
     public int getId() {
         return id;
