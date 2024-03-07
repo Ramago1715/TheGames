@@ -16,7 +16,8 @@
         android:src="@mipmap/trofeo_foreground"
         app:borderWidth="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="mostrarpuntuacion"/>
 
     <ImageView
         android:id="@+id/fotoperfil"

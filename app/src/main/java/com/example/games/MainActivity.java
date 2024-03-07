@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         this.db = GameDB.getInstance(getApplicationContext());
         this.executor = Executors.newSingleThreadExecutor();
 
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.userNameMainActivity);
         if (this.usuario != null) {
             textView.setText(this.usuario.getUser());
+            this.puntuacion = mayorPuntaje(this.usuario.getEmail());
 
         } else {
             textView.setText("Usuario no encontrado");
@@ -111,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen"), PICK_IMAGE_REQUEST);
+    }
+    public void mostrarpuntuacion(View view){
+        Toast.makeText(this, "Tu mayor puntuacio es: " + String.valueOf(this.puntuacion), Toast.LENGTH_SHORT).show();
     }
     @Override
     protected void onPause() {
@@ -176,5 +181,21 @@ public class MainActivity extends AppCompatActivity {
             Log.d("PRUEBA", "ByteArray nulo o vacío");
             profilefoto.setImageResource(R.mipmap.fotodeperfil); // Cargar una imagen predeterminada si el byteArray es nulo o vacío
         }
+    }
+
+    private int mayorPuntaje(String email){
+        Future<Integer> future = executor.submit(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return db.LeaderBoardDAO().getUsuarioMayorPuntaje(email);
+            }
+        });
+
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

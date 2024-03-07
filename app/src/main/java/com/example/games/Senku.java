@@ -31,8 +31,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Senku extends AppCompatActivity {
-    private int minuts = 0;
-    private int seconds = 3;
+    private int minuts = 2;
+    private int seconds = 0;
     private CountDownTimer timer;
     private Usuario usuario;
     public GridLayout gridLayout;
